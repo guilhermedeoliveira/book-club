@@ -28,4 +28,15 @@ module.exports = app => {
 
 	// Route - Callback returning from Facebook OAuth flow
 	app.get('/auth/facebook/callback', passport.authenticate('facebook'));
+
+	// Route - Current_user information
+	app.get('/api/current_user', (req, res) => {
+		res.send(req.user);
+	});
+
+	// Route - Logout
+	app.get('/api/logout', (req, res) => {
+		req.logout();
+		res.send(req.user);
+	});
 };
