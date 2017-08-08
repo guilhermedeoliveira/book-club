@@ -50,17 +50,16 @@ passport.use(
 			callbackURL: '/auth/facebook/callback',
 			proxy: true
 		},
-		(accessToken, refreshToken, profile, done) => {
+		async (accessToken, refreshToken, profile, done) => {
 			// Callback returning from Facebook OAuth flow
-			User.findOne({ facebookId: profile.id }).then(existingUser => {
-				if (existingUser) {
-					done(null, existingUser);
-				} else {
-					new User({ facebookId: profile.id })
-						.save()
-						.then(user => done(null, user));
-				}
-			});
+			const existingUser = await User.findOne({ facebookId: profile.id });
+
+			if (existingUser) {
+				done(null, existingUser);
+			} else {
+				const user = await new User({ facebookId: profile.id }).save();
+				done(null, user);
+			}
 		}
 	)
 );
