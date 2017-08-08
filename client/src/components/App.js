@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import Landing from './Landing';
+import * as actions from '../actions';
 
 class App extends Component {
 	render() {
 		return (
-			<div style={{ textAlign: 'center' }}>
-				<h1>Welcome to the Book Club</h1>
-				<h2>
-					<a href="/auth/facebook">Signin With Facebook</a>
-				</h2>
-				<h2>
-					<a href="/auth/google">Signin With Google</a>
-				</h2>
+			<div>
+				<BrowserRouter>
+					<div>
+						<Route exact path="/" component={Landing} />
+					</div>
+				</BrowserRouter>
 			</div>
 		);
 	}
 }
 
-export default App;
+export default connect(null, actions)(App);
