@@ -6,9 +6,13 @@ import Landing from './Landing';
 import * as actions from '../actions';
 
 class App extends Component {
+	componentDidMount() {
+		this.props.fetchUser();
+	}
+
 	render() {
 		return (
-			<div>
+			<div className="container">
 				<BrowserRouter>
 					<div>
 						<Route exact path="/" component={Landing} />

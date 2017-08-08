@@ -15,7 +15,11 @@ module.exports = app => {
 	);
 
 	// Route - Callback returning from Google OAuth flow
-	app.get('/auth/google/callback', passport.authenticate('google'));
+	app.get(
+		'/auth/google/callback',
+		passport.authenticate('google'),
+		(req, res) => res.redirect('/feed')
+	);
 
 	/** FACEBOOK */
 	// Route - Enter Facebook OAuth flow
@@ -27,7 +31,11 @@ module.exports = app => {
 	);
 
 	// Route - Callback returning from Facebook OAuth flow
-	app.get('/auth/facebook/callback', passport.authenticate('facebook'));
+	app.get(
+		'/auth/facebook/callback',
+		passport.authenticate('facebook'),
+		(req, res) => res.redirect('/feed')
+	);
 
 	// Route - Current_user information
 	app.get('/api/current_user', (req, res) => {
@@ -37,6 +45,6 @@ module.exports = app => {
 	// Route - Logout
 	app.get('/api/logout', (req, res) => {
 		req.logout();
-		res.send(req.user);
+		res.redirect('/');
 	});
 };
